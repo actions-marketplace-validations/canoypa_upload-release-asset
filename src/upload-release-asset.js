@@ -15,17 +15,26 @@ async function run() {
     const assetName = core.getInput('asset_name', { required: true });
     // const assetContentType = core.getInput('asset_content_type', { required: true });
 
+    console.log('assetPath:', assetPath);
+
     // Determine content-length for header to upload asset
     const contentLength = filePath => fs.statSync(filePath).size;
 
     const globber = await glob.create(assetPath);
+    console.log('globber:', globber);
 
     // Upload a release asset
     // API Documentation: https://developer.github.com/v3/repos/releases/#upload-a-release-asset
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-upload-release-asset
     for await (const filePath of globber.globGenerator()) {
+      const contentType = mime.lookup(file);
+
       // Setup headers for API call, see Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-upload-release-asset for more information
-      const headers = { 'content-type': mime.lookup(file), 'content-length': contentLength(filePath) };
+
+      const headers = { 'content-type': contentType, 'content-length': contentLength(filePath) };
+
+      console.log('filePath:', filePath);
+      console.log('contentType:', contentType);
 
       await github.repos.uploadReleaseAsset({
         url: uploadUrl,
