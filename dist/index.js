@@ -5606,7 +5606,7 @@ async function run() {
     // API Documentation: https://developer.github.com/v3/repos/releases/#upload-a-release-asset
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-upload-release-asset
     for await (const filePath of globber.globGenerator()) {
-      const contentType = mime.lookup(file);
+      const contentType = mime.lookup(filePath);
 
       // Setup headers for API call, see Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-upload-release-asset for more information
 
