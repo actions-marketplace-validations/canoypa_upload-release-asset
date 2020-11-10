@@ -30,7 +30,6 @@ async function run() {
       const contentType = mime.lookup(filePath) || 'application/octet-stream';
 
       // Setup headers for API call, see Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-upload-release-asset for more information
-
       const headers = { 'content-type': contentType, 'content-length': contentLength(filePath) };
 
       console.log('filePath:', filePath);
